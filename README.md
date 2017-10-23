@@ -5,9 +5,9 @@ Dotions event spring boot starter
 ## Maven 依赖
 ```
 <dependency>
-  <groupId>com.dotions</groupId>
-  <artifactId>devent-spring-boot-starter</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+    <groupId>com.dotions</groupId>
+    <artifactId>devent-spring-boot-starter</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -50,7 +50,7 @@ IEventService eventService;
 
 // 触发事件
 Event e = new Event();
-e.setSource(“request success.”);
+e.setSource("request success.");
 e.setType(EventType.REQUEST);
 eventService.fire(e);
 ```
