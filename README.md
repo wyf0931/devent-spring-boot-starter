@@ -11,18 +11,19 @@ Dotions event spring boot starter
 </dependency>
 ```
 
-## 声明配置 application.properties 
+## 配置 application.properties 或 application.yml
 ```
-dotions.event.threadPoolSize=10
-dotions.event.threadNamePrefix=test-event
+// 处理事件的线程池大小，默认值：5
+dotions.event.threadPoolSize=5
+
+// 处理事件的线程前缀，默认值：devent
+dotions.event.threadNamePrefix=devent
 ```
 
 ## 定义 Event Type
 ```
 public interface EventType {
-	int STARTUP = 0;
-	int STOP = 1;
-	int REQUEST = 2;
+	int REQUEST = 1;    // 接口请求事件
 }
 ```
 
@@ -37,7 +38,8 @@ import com.dotions.event.annotation.EventListener;
 public class RequestListener implements Listener {
 	@Override
 	public void onEvent(Event e) {
-		System.out.println("[request] -----> e=" + e);
+	    String uid = e.getSource();
+		System.out.println("[request] -----> uid=" + uid);
 	}
 }
 ```
@@ -50,7 +52,7 @@ IEventService eventService;
 
 // 触发事件
 Event e = new Event();
-e.setSource("request success.");
+e.setSource("121231231231");
 e.setType(EventType.REQUEST);
 eventService.fire(e);
 ```
