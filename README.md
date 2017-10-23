@@ -21,9 +21,10 @@ public interface EventType {
 ## 定义监听器（Event Listener）
 定义一个listener 需要两步：
 
-    1. 实现 *com.dotions.event.Listener* 接口；
-    
-    2. 声明 **@EventListener** 注解，其中 order 属性为执行 listener 的顺序（可省略），value/ eventType 为事件类型；
+* 实现 *com.dotions.event.Listener* 接口；
+
+* 声明 **@EventListener** 注解，其中 order 属性为执行 listener 的顺序（可省略），value/ eventType 为事件类型；
+
 
 如下所示：
 ```
