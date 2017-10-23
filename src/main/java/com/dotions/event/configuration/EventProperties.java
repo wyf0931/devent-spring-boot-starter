@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * <p>
+ * Event 相关配置项
  * </p>
  * 
  * @author wangyunfei 2017-10-16
@@ -11,38 +12,54 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "dotions.event")
 public class EventProperties {
 
-	private int threadPoolSize = 5;
+    private int threadPoolSize;
+    private String threadNamePrefix;
 
-	private String threadNamePrefix = "event";
+    public EventProperties() {
+        super();
+    }
 
-	/**
-	 * @return the threadPoolSize
-	 */
-	public int getThreadPoolSize() {
-		return threadPoolSize;
-	}
+    public EventProperties(int threadPoolSize, String threadNamePrefix) {
+        super();
+        this.threadPoolSize = threadPoolSize;
+        this.threadNamePrefix = threadNamePrefix;
+    }
 
-	/**
-	 * @param threadPoolSize
-	 *            the threadPoolSize to set
-	 */
-	public void setThreadPoolSize(int threadPoolSize) {
-		this.threadPoolSize = threadPoolSize;
-	}
+    /**
+     * @return the threadPoolSize
+     */
+    public int getThreadPoolSize() {
+        return threadPoolSize;
+    }
 
-	/**
-	 * @return the threadNamePrefix
-	 */
-	public String getThreadNamePrefix() {
-		return threadNamePrefix;
-	}
+    /**
+     * @param threadPoolSize
+     *        the threadPoolSize to set
+     */
+    public void setThreadPoolSize(int threadPoolSize) {
+        this.threadPoolSize = threadPoolSize;
+    }
 
-	/**
-	 * @param threadNamePrefix
-	 *            the threadNamePrefix to set
-	 */
-	public void setThreadNamePrefix(String threadNamePrefix) {
-		this.threadNamePrefix = threadNamePrefix;
-	}
+    /**
+     * @return the threadNamePrefix
+     */
+    public String getThreadNamePrefix() {
+        return threadNamePrefix;
+    }
+
+    /**
+     * @param threadNamePrefix
+     *        the threadNamePrefix to set
+     */
+    public void setThreadNamePrefix(String threadNamePrefix) {
+        this.threadNamePrefix = threadNamePrefix;
+    }
+
+    /**
+     * Make default object.
+     * */
+    public static EventProperties makeDefault() {
+        return new EventProperties(5, "devent");
+    }
 
 }

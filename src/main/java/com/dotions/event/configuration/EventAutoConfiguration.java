@@ -21,32 +21,34 @@ import com.dotions.event.annotation.EventListenerAnnotationProcessor;
 @EnableConfigurationProperties(EventProperties.class)
 public class EventAutoConfiguration {
 
-	private final EventProperties properties;
+    private final EventProperties properties;
 
-	public EventAutoConfiguration(EventProperties properties) {
-		this.properties = properties;
-	}
+    public EventAutoConfiguration(EventProperties properties) {
+        this.properties = properties;
+    }
 
-	@Bean
-	@ConditionalOnMissingBean(IEventService.class)
-	public IEventService eventService(AbstractEventManager eventManager) {
-		DefaultEventServiceImpl impl = new DefaultEventServiceImpl();
-		impl.setEventManager(eventManager);
-		return impl;
-	}
+    @Bean
+    @ConditionalOnMissingBean(IEventService.class)
+    public IEventService eventService(AbstractEventManager eventManager) {
+        DefaultEventServiceImpl impl = new DefaultEventServiceImpl();
+        impl.setEventManager(eventManager);
+        return impl;
+    }
 
-	@Bean
-	@ConditionalOnMissingBean(AbstractEventManager.class)
-	public AbstractEventManager eventManager() {
-		return new DefaultEventManager(properties);
-	}
+    @Bean
+    @ConditionalOnMissingBean(AbstractEventManager.class)
+    public AbstractEventManager eventManager() {
+        DefaultEventManager eventManager = new DefaultEventManager();
+        eventManager.setProperties(properties);
+        return eventManager;
+    }
 
-	@Bean
-	@ConditionalOnMissingBean(EventListenerAnnotationProcessor.class)
-	public EventListenerAnnotationProcessor eventListenerAnnotationProcessor(AbstractEventManager eventManager) {
-		EventListenerAnnotationProcessor processor = new EventListenerAnnotationProcessor();
-		processor.setEventManager(eventManager);
-		return processor;
-	}
+    @Bean
+    @ConditionalOnMissingBean(EventListenerAnnotationProcessor.class)
+    public EventListenerAnnotationProcessor eventListenerAnnotationProcessor(AbstractEventManager eventManager) {
+        EventListenerAnnotationProcessor processor = new EventListenerAnnotationProcessor();
+        processor.setEventManager(eventManager);
+        return processor;
+    }
 
 }
