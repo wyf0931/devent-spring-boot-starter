@@ -45,12 +45,9 @@ public class RequestListener implements Listener {
 
 ## 触发事件
 ```
-// 引入事件服务（devent-spring-boot-starter 中已实例化默认实现，可以直接使用）
+// 引入事件服务（已实例化默认实现，可以直接使用）
 @Autowired
 IEventService eventService;
-
-// 通过构造函数的方式初始化事件
-// Event e = new Event(121231231L, EventType.REQUEST);
 
 Event e = new Event();
 // 设置要传递给 listener 的参数，可以是任意类型数据
