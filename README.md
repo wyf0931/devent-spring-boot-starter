@@ -36,6 +36,7 @@ import com.dotions.event.Event;
 import com.dotions.event.Listener;
 import com.dotions.event.annotation.EventListener;
 
+// @EventListener(EventType.REQUEST)
 @EventListener(value=EventType.REQUEST, order=1)
 public class RequestListener implements Listener {
 	@Override
@@ -54,7 +55,7 @@ IEventService eventService;
 
 // 触发事件
 Event e = new Event();
-e.setSource("121231231231");
+e.setSource(121231231L);
 e.setType(EventType.REQUEST);
 eventService.fire(e);
 ```
