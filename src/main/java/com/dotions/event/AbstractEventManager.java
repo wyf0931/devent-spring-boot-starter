@@ -10,6 +10,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.springframework.util.Assert;
+
 import com.dotions.event.configuration.EventProperties;
 import com.dotions.event.utils.ListenerWrapper;
 import com.dotions.event.utils.NamedThreadFactory;
@@ -37,11 +39,8 @@ public abstract class AbstractEventManager {
     /**
      * 用的时候再初始化
      */
-    protected void lazyInit() {
-        if (properties == null) {
-            System.out.println("[init] properties use default.");
-            properties = EventProperties.makeDefault();
-        }
+    protected synchronized void lazyInit() {
+        Assert.notNull(properties, "properties must not be null.");
 
         int size = properties.getThreadPoolSize();
         String threadPrefix = properties.getThreadNamePrefix();
@@ -52,6 +51,7 @@ public abstract class AbstractEventManager {
         eventQueue = new LinkedBlockingQueue<>();
         // 初始化一个固定大小的 executor
         executor = new ThreadPoolExecutor(size, size, 0L, TimeUnit.MILLISECONDS, eventQueue, factory);
+        initFlag.set(true);
     }
 
     protected void execute(Event event) {

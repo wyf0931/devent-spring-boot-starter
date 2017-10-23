@@ -12,8 +12,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "dotions.event")
 public class EventProperties {
 
-    private int threadPoolSize;
-    private String threadNamePrefix;
+    private int threadPoolSize = 5;
+    private String threadNamePrefix = "devent";
 
     public EventProperties() {
         super();
@@ -53,13 +53,6 @@ public class EventProperties {
      */
     public void setThreadNamePrefix(String threadNamePrefix) {
         this.threadNamePrefix = threadNamePrefix;
-    }
-
-    /**
-     * Make default object.
-     * */
-    public static EventProperties makeDefault() {
-        return new EventProperties(5, "devent");
     }
 
 }
