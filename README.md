@@ -14,7 +14,7 @@ Dotions event manager spring boot starter.
 ## 定义事件（Event Type）
 ```
 public interface EventType {
-	int REQUEST = 1;    // 接口请求事件
+	int REQUEST = 1;    // 此处以接口请求事件为例（请自己业务需要定义）
 }
 ```
 
@@ -23,7 +23,7 @@ public interface EventType {
 
 * 实现 *com.dotions.event.Listener* 接口；
 
-* 声明 **@EventListener** 注解，其中 value / eventType 为事件类型，order 为执行 listener 的顺序（可省略）；
+* 声明 **@EventListener** 注解，其中 value / eventType 为监听的事件类型，order 为 listener 的执行顺序（可省略）；
 
 
 如下所示：
