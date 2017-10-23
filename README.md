@@ -32,7 +32,7 @@ import com.dotions.event.Event;
 import com.dotions.event.Listener;
 import com.dotions.event.annotation.EventListener;
 
-// @EventListener(EventType.REQUEST) order 可省略
+// @EventListener(EventType.REQUEST) // order 可省略
 @EventListener(value=EventType.REQUEST, order=1)
 public class RequestListener implements Listener {
 	@Override
@@ -49,10 +49,8 @@ public class RequestListener implements Listener {
 @Autowired
 IEventService eventService;
 
-
 // 通过构造函数的方式初始化事件
 // Event e = new Event(121231231L, EventType.REQUEST);
-
 
 Event e = new Event();
 // 设置要传递给 listener 的参数，可以是任意类型数据
