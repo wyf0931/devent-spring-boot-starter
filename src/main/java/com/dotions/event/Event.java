@@ -36,15 +36,9 @@ public class Event implements Serializable {
     /**
      * @return the source
      */
-    public Object getSource() {
-        return source;
-    }
-
-    /**
-     * @return the source
-     */
-    public <T> T getSource(Class<T> clazz) {
-        return clazz.cast(source);
+    @SuppressWarnings("unchecked")
+    public <T> T getSource() {
+        return (T) source;
     }
 
     /**
