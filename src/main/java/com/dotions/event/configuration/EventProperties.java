@@ -6,8 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * <p>
  * Event 相关配置项
  * </p>
- * 
- * @author wangyunfei 2017-10-16
+ * Created by Dotions on 2017-10-16.
  */
 @ConfigurationProperties(prefix = "dotions.event")
 public class EventProperties {

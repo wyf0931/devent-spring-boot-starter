@@ -14,7 +14,7 @@ import com.dotions.event.IEventService;
 import com.dotions.event.annotation.EventListenerAnnotationProcessor;
 
 /**
- * @author wangyunfei 2017-10-16
+ * Created by Dotions on 2017-10-16.
  */
 @Configuration
 @ConditionalOnClass(Event.class)

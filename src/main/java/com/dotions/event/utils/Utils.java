@@ -5,7 +5,7 @@ package com.dotions.event.utils;
  * 常用工具方法
  * </p>
  * 
- * @author wangyunfei 2017-10-23
+ * Created by Dotions on 2017-10-23.
  */
 public abstract class Utils {
     

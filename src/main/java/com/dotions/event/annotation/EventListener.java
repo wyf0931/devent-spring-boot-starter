@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Retention(RUNTIME)
 @Target(TYPE)
 /**
- * @author wangyunfei 2017-10-20
+ * Created by Dotions on 2017-10-20.
  */
 public @interface EventListener {
 
