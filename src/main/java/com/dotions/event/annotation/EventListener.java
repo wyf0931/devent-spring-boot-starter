@@ -7,6 +7,7 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,13 +19,14 @@ import org.springframework.stereotype.Component;
  */
 public @interface EventListener {
 
-	/**
-	 * 监听器的顺序
-	 */
-	int order() default 0;
+    /** 监听器的顺序 */
+    int order() default 0;
 
-	/**
-	 * 被监听事件的类型
-	 */
-	int value();
+    /** 被监听事件的类型 */
+    @AliasFor("eventType")
+    int value() default 0;
+
+    /** 被监听事件的类型 */
+    @AliasFor("value")
+    int eventType() default 0;
 }

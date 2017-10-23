@@ -60,7 +60,7 @@ public class ListenerWrapper {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(32);
         builder.append("ListenerProxy [listener=");
         builder.append(listener);
         builder.append(", order=");

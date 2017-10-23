@@ -1,5 +1,7 @@
 package com.dotions.event;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 /**
@@ -10,20 +12,26 @@ import org.springframework.util.Assert;
  */
 public class DefaultEventServiceImpl implements IEventService {
 
-	private AbstractEventManager eventManager;
+    private static final Logger logger = LoggerFactory.getLogger(DefaultEventServiceImpl.class);
 
-	@Override
-	public void fire(Event event) {
-		Assert.notNull(event, "event must not be null");
-		eventManager.execute(event);
-	}
+    private AbstractEventManager eventManager;
 
-	/**
-	 * @param eventManager
-	 *            the eventManager to set
-	 */
-	public void setEventManager(AbstractEventManager eventManager) {
-		this.eventManager = eventManager;
-	}
+    @Override
+    public void fire(Event event) {
+        Assert.notNull(event, "event must not be null");
+
+        eventManager.execute(event);
+        if (logger.isInfoEnabled()) {
+            logger.info("[fire] success. event=" + event);
+        }
+    }
+
+    /**
+     * @param eventManager
+     *        the eventManager to set
+     */
+    public void setEventManager(AbstractEventManager eventManager) {
+        this.eventManager = eventManager;
+    }
 
 }

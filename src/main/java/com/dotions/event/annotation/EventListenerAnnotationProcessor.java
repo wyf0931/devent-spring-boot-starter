@@ -1,10 +1,14 @@
 package com.dotions.event.annotation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 
 import com.dotions.event.AbstractEventManager;
 import com.dotions.event.Listener;
+import com.dotions.event.utils.Utils;
 
 /**
  * <p>
@@ -14,41 +18,56 @@ import com.dotions.event.Listener;
  */
 public class EventListenerAnnotationProcessor implements BeanPostProcessor {
 
-	private AbstractEventManager eventManager;
+    private static final Logger logger = LoggerFactory.getLogger(EventListenerAnnotationProcessor.class);
 
-	/**
-	 * @param eventManager
-	 *            the eventManager to set
-	 */
-	public void setEventManager(AbstractEventManager eventManager) {
-		this.eventManager = eventManager;
-	}
+    private AbstractEventManager eventManager;
 
-	@Override
-	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-		return bean;
-	}
+    /**
+     * @param eventManager
+     *        the eventManager to set
+     */
+    public void setEventManager(AbstractEventManager eventManager) {
+        this.eventManager = eventManager;
+    }
 
-	@Override
-	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-		// System.out.println("[scan] class=" + bean.getClass().getName());
-		scanEventListenerAnnotation(bean, beanName);
-		return bean;
-	}
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        return bean;
+    }
 
-	protected void scanEventListenerAnnotation(Object bean, String beanName) {
-		if (bean instanceof Listener) {
-			Listener listener = (Listener) bean;
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        // 扫描 EventListener 注解
+        scanEventListenerAnnotation(bean);
+        return bean;
+    }
 
-			Class<?> generic = listener.getClass();
-			EventListener eventListenerAnno = generic.getDeclaredAnnotation(EventListener.class);
-			int eventType = eventListenerAnno.value();
-			int order = eventListenerAnno.order();
-			eventManager.addListener(eventType, order, listener);
-			System.err.println("[scan] add listener, eventType=" + eventType + ", class=" + generic.getName());
-		} else {
-			System.out.println("[scan] skip bean, class=" + bean.getClass().getName());
-		}
-	}
+    /**
+     * 扫描 EventListener 注解并注册 listener 对象
+     */
+    protected void scanEventListenerAnnotation(Object bean) {
+        if (null == bean) {
+            return;
+        }
+
+        if (bean instanceof Listener) {
+            Listener listener = (Listener) bean;
+
+            EventListener anno = AnnotatedElementUtils.findMergedAnnotation(listener.getClass(), EventListener.class);
+            int eventType = anno.eventType();
+
+            try {
+                eventManager.registerListener(eventType, anno.order(), listener);
+                if (logger.isInfoEnabled()) {
+                    logger.info("[Scan-EventListener] found listener. eventType=" + eventType + ", listener="
+                            + Utils.getClassName(listener));
+                }
+            } catch (Exception e) {
+                logger.error(
+                        "[Scan-EventListener] scan fail. eventType=" + eventType + ", listener=" + Utils.getClassName(listener),
+                        e);
+            }
+        }
+    }
 
 }

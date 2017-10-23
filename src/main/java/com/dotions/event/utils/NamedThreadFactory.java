@@ -11,24 +11,26 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class NamedThreadFactory implements ThreadFactory {
 
-	/**
-	 * Thread Serial number.
-	 * */
-	private static final AtomicLong T_SN = new AtomicLong(0);
+    /**
+     * Thread Serial number.
+     */
+    private static final AtomicLong T_SN = new AtomicLong(0);
 
-	/**
-	 * Thread name prefix
-	 */
-	private String prefix;
+    private static final String FIXED_PREFIX = "-pool-";
 
-	public NamedThreadFactory(String prefix) {
-		super();
-		this.prefix = prefix;
-	}
+    /**
+     * Thread name prefix
+     */
+    private String prefix;
 
-	@Override
-	public Thread newThread(Runnable r) {
-		return new Thread(r, prefix + "-pool-" + T_SN.getAndIncrement());
-	}
+    public NamedThreadFactory(String prefix) {
+        super();
+        this.prefix = prefix;
+    }
+
+    @Override
+    public Thread newThread(Runnable r) {
+        return new Thread(r, prefix + FIXED_PREFIX + T_SN.getAndIncrement());
+    }
 
 }
