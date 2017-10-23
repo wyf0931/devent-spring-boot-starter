@@ -28,7 +28,9 @@ public interface EventType {
 ```
 
 ## 定义 Listener
-实现 *com.dotions.event.Listener* 接口并声明 **@EventListener** ，order 为执行顺序（可省略），value 为 eventType。
+定义一个listener 需要两步：
+    * 实现 *com.dotions.event.Listener* 接口
+    * 声明 **@EventListener** 注解，其中 order 属性为执行 listener 顺序（可省略），value 为 eventType。
 ```
 import com.dotions.event.Event;
 import com.dotions.event.Listener;
@@ -38,7 +40,7 @@ import com.dotions.event.annotation.EventListener;
 public class RequestListener implements Listener {
 	@Override
 	public void onEvent(Event e) {
-	    String uid = e.getSource();
+		String uid = e.getSource();
 		System.out.println("[request] -----> uid=" + uid);
 	}
 }
