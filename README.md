@@ -1,5 +1,5 @@
 # devent-spring-boot-starter
-Dotions event spring boot starter
+Dotions event manager spring boot starter.
 
 
 ## Maven 依赖
@@ -23,7 +23,7 @@ public interface EventType {
 
 * 实现 *com.dotions.event.Listener* 接口；
 
-* 声明 **@EventListener** 注解，其中 order 属性为执行 listener 的顺序（可省略），value/ eventType 为事件类型；
+* 声明 **@EventListener** 注解，其中 value / eventType 为事件类型，order 为执行 listener 的顺序（可省略）；
 
 
 如下所示：
@@ -32,7 +32,7 @@ import com.dotions.event.Event;
 import com.dotions.event.Listener;
 import com.dotions.event.annotation.EventListener;
 
-// @EventListener(EventType.REQUEST)
+// @EventListener(EventType.REQUEST) order 可省略
 @EventListener(value=EventType.REQUEST, order=1)
 public class RequestListener implements Listener {
 	@Override
@@ -45,20 +45,28 @@ public class RequestListener implements Listener {
 
 ## 触发事件
 ```
-// 引入事件服务
+// 引入事件服务（devent-spring-boot-starter 中已实例化默认实现，可以直接使用）
 @Autowired
 IEventService eventService;
 
-// 触发事件
+
+// 通过构造函数的方式初始化事件
+// Event e = new Event(121231231L, EventType.REQUEST);
+
+
 Event e = new Event();
+// 设置要传递给 listener 的参数，可以是任意类型数据
 e.setSource(121231231L);
+// 设置事件的类型
 e.setType(EventType.REQUEST);
+
+// 在业务需要的地方触发事件
 eventService.fire(e);
 ```
 
 ---
 
-## 自定义配置 application.properties 或 application.yml（可省略）
+## 配置 application.properties 或 application.yml（可省略）
 ```
 // 处理事件的线程池大小，默认值：5
 dotions.event.threadPoolSize=5
