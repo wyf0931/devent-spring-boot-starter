@@ -1,5 +1,5 @@
 # devent-spring-boot-starter
-Dotions event manager spring boot starter.
+一个基于SpringBoot starter的业务事件管理器。
 
 
 ## Maven 依赖
